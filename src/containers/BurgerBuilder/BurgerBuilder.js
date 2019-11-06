@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // custom components
-import Aux from '../../hoc/Aux';
+import Aux from '../../hoc/Aux/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from "../../components/Burger/BuildControls/BuildControls"
 
