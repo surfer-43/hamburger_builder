@@ -9,12 +9,10 @@ const navItems = (props) => {
         <ul className={classes.NavItems}>
             <NavItem 
                 link="/"
-                active={true}
             >Burger Builder</NavItem>
             <NavItem 
-                link="/"
-                active={false}
-            >Checkout</NavItem>
+                link="/orders"
+            >Orders</NavItem>
         </ul>
     )
 }

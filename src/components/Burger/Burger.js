@@ -9,10 +9,8 @@ import BurgerIngredients from './Ingredients/BurgerIngredients';
 const burger = (props) => {
     let transformedIngredients = Object.keys(props.ingredients)
         .map(ingredientKey => {
-            console.log("[burger.js] ingredientKey value: ", ingredientKey);
             return [...Array(props.ingredients[ingredientKey])]
                 .map((_, i) => {
-                    console.log("what is the BurgerIngredients indexing key: ", ingredientKey+i);
                     return <BurgerIngredients key={ingredientKey+i} type={ingredientKey}/>
                 })
         })

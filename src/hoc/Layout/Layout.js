@@ -14,7 +14,6 @@ class Layout extends Component {
     }
 
     sideDrawerClosedHandler = () => {
-        console.log("did the sideDrawerCloseHandler get called: ");
         this.setState((prevState)=>{
             return{ showSideDrawer: !prevState.showSideDrawer };
         })

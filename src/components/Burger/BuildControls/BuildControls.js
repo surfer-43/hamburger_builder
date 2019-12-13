@@ -13,13 +13,11 @@ const controls = [
     {label: 'Meat', type:'meat'},
 ];
 const BuildControls = (props) => {
-    console.log("what are the props being passed in: ", props);
 
     return (
         <div className={classes.BuildControls}>
             <p>Current price: <strong>${props.price.toFixed(2)}</strong></p>
             {controls.map(ctr => {
-                console.log("what is the ctr.key value: ", ctr);
                 return <BuildControl 
                 key={ctr.label} 
                 label={ctr.label}
@@ -30,7 +28,7 @@ const BuildControls = (props) => {
             })}
             <button 
                 className={classes.OrderButton} 
-                disabled={props.purchasable}
+                disabled={!props.purchasable}
                 onClick={props.checkout}
                 >Order Now</button>
         </div>

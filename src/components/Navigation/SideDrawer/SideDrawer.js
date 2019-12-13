@@ -9,7 +9,6 @@ import BurgerLogo from '../../Logo/Logo';
 import NavItems from '../NavItems/NavItems';
 
 const sideDrawer = (props) => {
-    console.log("these are the props for the sideDrawer: ", props);
     // conditional logic to show or hide the drawer
     let attachedClasses = [classes.SideDrawer, classes.Close];
     if(props.opened) {
