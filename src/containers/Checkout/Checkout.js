@@ -26,11 +26,19 @@ class Checkout extends Component {
                     price = Number(a[1]);
                 }
             });
-            this.setState({
-                ingredients: newIngredients,
-                totalPrice: price
-            });
+        } else {
+            // added default burger here to allow for development when halfway through the checkout process
+            newIngredients = {
+                    bacon: "2",
+                    cheese: "3",
+                    meat: "1",
+                    salad: "1"
+                }
         }
+        this.setState({
+            ingredients: newIngredients,
+            totalPrice: price
+        });
     }
 
     checkoutContinuedHandler = () => {
