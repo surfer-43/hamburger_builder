@@ -5,22 +5,37 @@ import classes from "./Input.css";
 const input = (props) => {
     console.log("what are the props: ", props);
     let inputElement = null;
+    const inputClasses = [classes.InputElement];
+    let validationError = null;
+
+    if(props.invalid && props.modified) {
+        validationError = <span className={classes.WarningMessage}>Please enter something valid for {props.elementConfig.placeholder} </span>
+    }
+
+    if(props.invalid && props.shouldValidate && props.modified) {
+        inputClasses.push(classes.Invalid);
+    }
     switch(props.elementType) {
         case ('input'):
-            inputElement = <input 
-                className={classes.InputElement} 
-                {...props.elementConfig} 
-                value={props.value} 
-                onChange={props.changed}
-                />;
+            inputElement = (
+                <div>
+                    <input 
+                        className={inputClasses.join(" ")} 
+                        {...props.elementConfig} 
+                        value={props.value} 
+                        onChange={props.changed}
+                    />
+                    {validationError}
+                </div>
+            )
             break;
         
         case "select":
             inputElement = (
                 <div>
-                    <label>{props.value}</label>
+                    <label className={classes.Label}>{props.value}</label>
                     <select 
-                        className={classes.InputElement} 
+                        className={inputClasses.join(" ")} 
                         value={props.value}
                         onChange={props.changed}
                     >
@@ -37,7 +52,7 @@ const input = (props) => {
         default:
             console.log("this input type isn't handled yet");
             inputElement = <input 
-                className={classes.InputElement} 
+                className={inputClasses.join(" ")} 
                 {...props.elementConfig} 
                 value={props.value} 
                 onChange={props.changed}

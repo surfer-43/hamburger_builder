@@ -27,3 +27,16 @@
     outline: none;
     background-color: #ccc;
 }
+
+.Invalid {
+    border: thin solid red;
+    background-color: rgb(255, 151, 151)
+}
+
+.WarningMessage {
+    color: red;
+    border: thin solid red;
+    border-top: none;
+    padding: 5px 10px;
+    display: block;
+}

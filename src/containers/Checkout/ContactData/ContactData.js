@@ -14,9 +14,14 @@ class ContactData extends Component {
                 elementType: 'input',
                 elementConfig: {
                     type: 'text',
-                    placeholder: 'Sam'
+                    placeholder: 'Name'
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true
+                },
+                isValid: false,
+                modified: false
             },
             address: {
                 elementType: 'input',
@@ -24,7 +29,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your street address'
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true
+                },
+                isValid: false,
+                modified: false
             },
             zipCode: {
                 elementType: 'input',
@@ -32,7 +42,14 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Your Zip Code'
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true,
+                    minLength: 5,
+                    maxLength: 5
+                },
+                isValid: false,
+                modified: false
             },
             country: {
                 elementType: 'input',
@@ -40,7 +57,12 @@ class ContactData extends Component {
                     type: 'text',
                     placeholder: 'Country'
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true
+                },
+                isValid: false,
+                modified: false
             },
             email: {
                 elementType: 'input',
@@ -48,7 +70,12 @@ class ContactData extends Component {
                     type: 'email',
                     placeholder: 'Your email'
                 },
-                value: ""
+                value: "",
+                validation: {
+                    required: true
+                },
+                isValid: false,
+                modified: false
             },
             delivery: {
                 elementType: 'select',
@@ -58,9 +85,13 @@ class ContactData extends Component {
                         {value: 'cheapest', displayValue: 'Cheapest'}
                     ]
                 },
-                value: "choose a delivery type"
+                value: "choose a delivery type",
+                validation: {},
+                isValid: true
             }
-        }
+        },
+        formIsValid: false,
+        loading: false
     };
 
     orderHandler = (event) => {
@@ -94,8 +125,25 @@ class ContactData extends Component {
         });
     }
 
+    checkValidity = (value, rule) => {
+        let isValid = true;
+        if(rule.required && isValid) {
+            isValid = value.trim() !== "";
+        }
+
+        if(rule.minLength && isValid) {
+            isValid = value.length >= rule.minLength;
+        }
+
+        if(rule.maxLength && isValid) {
+            isValid = value.length <= rule.maxLength;
+        }
+
+        return isValid;
+    }
+
     changeHandler = (event, id) => {
-        console.log("data passed to the changedHandler: ", id, " : ", event.target.value);
+        // console.log("data passed to the changedHandler: ", id, " : ", event.target.value);
         const updatedOrderForm = {
             ...this.state.orderForm
         }
@@ -103,9 +151,19 @@ class ContactData extends Component {
             ...updatedOrderForm[id]
         }
 
+        let formIsValid = true;
+        for( let inputIdentifier in updatedOrderForm) {
+            formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+        }
+
         updatedFormElm.value = event.target.value;
+        updatedFormElm.isValid = this.checkValidity(updatedFormElm.value, updatedFormElm.validation);
+        updatedFormElm.modified = true;
         updatedOrderForm[id] = updatedFormElm;
-        this.setState({orderForm: updatedOrderForm})
+        this.setState({
+            orderForm: updatedOrderForm,
+            formIsValid: formIsValid
+        })
     }
 
     render() {
@@ -120,11 +178,21 @@ class ContactData extends Component {
                 <form onSubmit={this.orderHandler}>
                     {formElementArray.map(elm => {
                         return (
-                            <Input key={elm.id} elementType={elm.config.elementType} elementConfig={elm.config.elementConfig} value={elm.config.value} changed={(event) => {this.changeHandler(event, elm.id)}} />
+                            <Input 
+                                key={elm.id} 
+                                elementType={elm.config.elementType} 
+                                elementConfig={elm.config.elementConfig} 
+                                value={elm.config.value} 
+                                shouldValidate={elm.config.validation}
+                                invalid={!elm.config.isValid}
+                                modified={elm.config.modified}
+                                changed={(event) => {this.changeHandler(event, elm.id)}} 
+                            />
                         )
                     })}
                     <Button 
                         btnType="Success"
+                        disabled={!this.state.formIsValid}
                     >Order</Button>
                 </form>
         );
