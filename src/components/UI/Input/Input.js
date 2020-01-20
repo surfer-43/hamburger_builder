@@ -3,14 +3,14 @@ import React from "react";
 import classes from "./Input.css";
 
 const input = (props) => {
-    console.log("what are the props: ", props);
     let inputElement = null;
     const inputClasses = [classes.InputElement];
-    let validationError = null;
+    // let validationError = null;
 
-    if(props.invalid && props.modified) {
-        validationError = <span className={classes.WarningMessage}>Please enter something valid for {props.elementConfig.placeholder} </span>
-    }
+    // if(props.invalid && props.shouldValidate && props.modified) {
+    //     // validationError = <span className={classes.WarningMessage}>Please enter something valid for {props.elementConfig.placeholder} </span>
+    //     validationError.push(classes.Invalid)
+    // }
 
     if(props.invalid && props.shouldValidate && props.modified) {
         inputClasses.push(classes.Invalid);
@@ -25,7 +25,7 @@ const input = (props) => {
                         value={props.value} 
                         onChange={props.changed}
                     />
-                    {validationError}
+                    {/* validationError */}
                 </div>
             )
             break;
@@ -50,7 +50,6 @@ const input = (props) => {
             break;
 
         default:
-            console.log("this input type isn't handled yet");
             inputElement = <input 
                 className={inputClasses.join(" ")} 
                 {...props.elementConfig} 

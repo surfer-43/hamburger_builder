@@ -1,45 +1,12 @@
 import React, { Component } from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
-import ContactData from "./ContactData/ContactData"
+import ContactData from "./ContactData/ContactData";
+// import * as actions from "../../store/actions/order";
 
 class Checkout extends Component {
-    state = {
-        ingredients: null,
-        totalPrice: 0
-    }
-
-    componentWillMount () {
-        const ingredientsArray = this.props.location.search.slice(1).split("&");
-        // tutorial suggested URLSearchParams() - not working for me
-        // const ingredientsArray = new URLSearchParams(this.props.location.search);
-
-        let newIngredients = {};
-        let price = 0;
-        if(ingredientsArray.length > 1) {
-            ingredientsArray.forEach( ingredient => {
-                let a = ingredient.split("=");
-                if(a[0] !== "price") {
-                    newIngredients[a[0]] = Number(a[1]);
-                } else {
-                    price = Number(a[1]);
-                }
-            });
-        } else {
-            // added default burger here to allow for development when halfway through the checkout process
-            newIngredients = {
-                    bacon: "2",
-                    cheese: "3",
-                    meat: "1",
-                    salad: "1"
-                }
-        }
-        this.setState({
-            ingredients: newIngredients,
-            totalPrice: price
-        });
-    }
 
     checkoutContinuedHandler = () => {
         this.props.history.replace('/checkout/contact-data');
@@ -50,28 +17,36 @@ class Checkout extends Component {
     }
 
     render() {
-        return (
-            <div>
-                <CheckoutSummary 
-                    checkoutContinued={this.checkoutContinuedHandler}
-                    checkoutCancelled={this.checkoutCancelledHandler}
-                    ingredients={this.state.ingredients}/>
-
+        let summary = <Redirect to="/"/>;
+        if(this.props.ings) {
+            console.log("[checkout] - there are ingredients here");
+            summary = (
+                <div>
+                    <CheckoutSummary 
+                        checkoutContinued={this.checkoutContinuedHandler}
+                        checkoutCancelled={this.checkoutCancelledHandler}
+                        ingredients={this.props.ings}/>
                     <Route 
                         path={this.props.match.path + "/contact-data" } 
-                        render={(props) => {
-                            return (
-                                <ContactData 
-                                    ingredients={this.state.ingredients} 
-                                    price={this.state.totalPrice} 
-                                    {...props}
-                                />
-                            )
-                        }}
+                        component={ContactData}
                     />
-            </div>
-        )
+                </div>
+            )
+        }
+        return summary;
     }
 }
 
-export default Checkout;
+const mapStateToProps = (state) => {
+    return {
+        ings: state.burgerBuilder.ingredients
+    }
+}
+
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         onInitPurchase: () => dispatch( actions.purchaseInit() )
+//     };
+// }
+
+export default connect(mapStateToProps)(Checkout);
