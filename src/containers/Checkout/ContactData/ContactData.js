@@ -94,7 +94,7 @@ class ContactData extends Component {
                 isValid: true
             }
         },
-        formIsValid: true,
+        formIsValid: false,
     };
 
     orderHandler = (event) => {

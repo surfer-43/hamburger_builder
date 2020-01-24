@@ -30,7 +30,7 @@ export const purchaseOrder = (orderData) => {
         axios.post('/orders.json', orderData)
         .then(response => {
             console.log('what is the response.data: ', response.data);
-            dispatch(purchaseOrderSuccess(response.data, orderData));
+            dispatch(purchaseOrderSuccess(response.data.name, orderData));
         })
         .catch( error => {
             dispatch(purchaseOrderFail(error));

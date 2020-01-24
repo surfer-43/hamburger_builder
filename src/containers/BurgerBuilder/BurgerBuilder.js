@@ -19,7 +19,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 // bringing in the different actions
 // import * as actionTypes from '../../store/actions/actionTypes';
-import * as burgerBuilderActions from '../../store/actions/index';
+import * as actions from '../../store/actions/index';
 
 class BurgerBuilder extends Component {
     /**
@@ -85,6 +85,9 @@ class BurgerBuilder extends Component {
             * this.props.history.push({pathname: "/checkout", search: "?"+queryString});
         */
 
+        // initializing the purchase state
+        this.props.initPurchase();
+
         // with Redux:
         this.props.history.push({pathname: "/checkout"});
     }
@@ -149,9 +152,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        addIngredient: (ingName) => dispatch(burgerBuilderActions.addIngredient(ingName)),
-        removeIngredient: (ingName) => dispatch(burgerBuilderActions.removeIngredient(ingName)),
-        initIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+        addIngredient: (ingName) => dispatch(actions.addIngredient(ingName)),
+        removeIngredient: (ingName) => dispatch(actions.removeIngredient(ingName)),
+        initIngredients: () => dispatch(actions.initIngredients()),
+        initPurchase: () => dispatch(actions.purchaseInit())
     }
 }
 
