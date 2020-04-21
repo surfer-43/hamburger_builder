@@ -58,7 +58,6 @@ class BurgerBuilder extends Component {
         }).reduce((sum, el) => {
             return sum + el
         }, 0);
-        console.log(`what is the sum: ${sum}`);
         return sum > 0;
     }
 

@@ -16,7 +16,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
             error: null
         }
 
-        componentWillMount() {
+        // componentWillMount() {
+        componentDidMount() {
+            console.log("look to see if the modal did fire");
             // create an axios interceptor for the request as well so that we can reset the error state on each request
             this.reqInerceptor = axios.interceptors.request.use( req => {
                 this.setState({
@@ -30,7 +32,9 @@ const withErrorHandler = (WrappedComponent, axios) => {
              * figure out what the exact parameters are that are being passed in
              * are they both functions? (seems like it)
              */
-            this.responseInterceptor = axios.interceptors.response.use( res => res, error => {
+            this.responseInterceptor = axios.interceptors.response.use( res => (res, error) => {
+                console.log("ErrorHandler: what is the response: ", res);
+                console.log("ErrorHandler: what is the error: ", error);
                 this.setState({
                     error: error
                 });
@@ -38,6 +42,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         }
 
         componentWillUnmount() {
+            console.log("this should fire")
             /**
              * because the withErrorHandler component can wrap around many different 
              * components, there could be many different interceptros that linger but aren't used

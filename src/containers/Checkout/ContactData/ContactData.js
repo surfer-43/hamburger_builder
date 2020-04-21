@@ -98,7 +98,6 @@ class ContactData extends Component {
     };
 
     orderHandler = (event) => {
-        console.log("does the orderHandler happen");
         event.preventDefault();
 
         const formData = {};
@@ -118,7 +117,6 @@ class ContactData extends Component {
     }
 
     checkValidity = (value, rule) => {
-        console.log("[checkValidity] : ", value,  " : ", rule);
         let isValid = true;
         if(rule.required && isValid ) {
             isValid = value.trim() !== "";
@@ -136,8 +134,6 @@ class ContactData extends Component {
     }
 
     changeHandler = (event, id) => {
-        console.log('[changeHandler] - WTF: ', event.target, " : ", id);
-        // console.log("data passed to the changedHandler: ", id, " : ", event.target.value);
         const updatedOrderForm = {
             ...this.state.orderForm
         }
@@ -152,8 +148,6 @@ class ContactData extends Component {
 
         let formIsValid = true;
         for( let inputIdentifier in updatedOrderForm) {
-            console.log("what is the inputIdentifier: ", inputIdentifier);
-            console.log("is the form element valid: ", updatedOrderForm[inputIdentifier].isValid);
             formIsValid = updatedOrderForm[inputIdentifier].isValid && formIsValid;
         }
 

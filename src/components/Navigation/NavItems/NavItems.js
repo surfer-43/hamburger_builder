@@ -13,6 +13,9 @@ const navItems = (props) => {
             <NavItem 
                 link="/orders"
             >Orders</NavItem>
+            <NavItem 
+                link="/auth"
+            >Sign in</NavItem>
         </ul>
     )
 }

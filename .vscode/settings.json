@@ -1,3 +1,8 @@
 {
-    "debug.enableAllHovers": true
+    "debug.enableAllHovers": true,
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#4C0D61",
+        "titleBar.activeBackground": "#6A1288",
+        "titleBar.activeForeground": "#FDFAFE"
+    }
 }

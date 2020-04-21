@@ -12,9 +12,18 @@ const input = (props) => {
     //     validationError.push(classes.Invalid)
     // }
 
-    if(props.invalid && props.shouldValidate && props.modified) {
-        inputClasses.push(classes.Invalid);
+    /**
+     * new check to see if I can get validation working as expected
+     */
+    if(props.shouldValidate && props.modified) {
+        if(!props.invalid){
+            inputClasses.push(classes.Invalid);
+        } 
     }
+    // if(props.invalid && props.shouldValidate && props.modified) {
+    //     console.log("looking for invalid: ", props.invalid, " : shouldValidate: ", props.shouldValidate, " : modified: ", props.modified);
+    //     inputClasses.push(classes.Invalid);
+    // }
     switch(props.elementType) {
         case ('input'):
             inputElement = (
