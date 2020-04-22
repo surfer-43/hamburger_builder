@@ -13,7 +13,15 @@ const order = (props) => {
 
     const ingredientOutput = ingredients.map( ig => {
         return (
-            <li key={ig.name}>{ig.name} : {ig.amount}</li>
+            <li
+            style={{
+                textTransform: 'capitalize',
+                display: 'inline-block',
+                margin: '0 8px',
+                padding: '5px',
+                border: '1px solid #ccc'
+            }} 
+            key={ig.name}>{ig.name} : {ig.amount}</li>
         )
     })
     return (
