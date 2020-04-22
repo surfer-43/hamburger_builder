@@ -10,7 +10,7 @@ const initialState = {
 const orderReducer = (state = initialState, action) => {
     switch(action.type) {
         case actionTypes.PURCHASE_BURGER_START:
-            return updateObj( state, {loading: true});
+            return updateObj( state, {loading: false});
         case actionTypes.PURCHASE_BURGER_SUCCESS:
             const newOrder = updateObj(action.orderData, {id: action.orderId});
             return updateObj( state, {loading: false, orders: state.orders.concat(newOrder), purchased: true});
