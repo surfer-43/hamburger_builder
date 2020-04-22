@@ -42,10 +42,6 @@ class BurgerBuilder extends Component {
         this.props.initIngredients();
     }
 
-    componentDidUpdate () {
-        console.log(`looking at all the props: `, this.props);
-    }
-
     updatePurchaseState (ingredients) {
         // one way to see if the state should be switched
         // we are looping through all the elements in the array anyway just for a 
