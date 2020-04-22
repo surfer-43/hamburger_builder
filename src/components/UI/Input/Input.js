@@ -36,7 +36,7 @@ const input = (props) => {
                     />
                     {/* validationError */}
                 </div>
-            )
+            );
             break;
         case ("textarea"):
             inputElement = (
@@ -46,7 +46,8 @@ const input = (props) => {
                     value={props.value}
                     onChange={props.changed}
                 />
-            )
+            );
+            break;
         
         case ("select"):
             inputElement = (
@@ -64,7 +65,7 @@ const input = (props) => {
                         })}
                     </select>
                 </div>
-            )
+            );
             break;
 
         default:
