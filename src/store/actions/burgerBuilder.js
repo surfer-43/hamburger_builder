@@ -36,7 +36,7 @@ export const initIngredients = () => {
             dispatch(setIngredients(resp.data));
         })
         .catch(error => {
-            // this.setState({error: true});
+            console.log("didn't get any incredients: ", error);
             dispatch(fetchIngredientsFailed());
         })
     }

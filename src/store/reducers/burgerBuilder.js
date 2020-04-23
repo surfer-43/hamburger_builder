@@ -45,6 +45,7 @@ const reducer = (state=initialState, action) => {
             
         case actionTypes.FETCH_INGREDIENTS_FAILED:
             // newPrice = updatePrice(state);
+            console.log("FETCH_INGREDIENTS_FAILED: ", action);
             return updateObj(state, {error: true});
         default:
             return state

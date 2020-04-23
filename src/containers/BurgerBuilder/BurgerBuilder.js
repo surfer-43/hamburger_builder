@@ -29,16 +29,8 @@ class BurgerBuilder extends Component {
         inCheckout: false
     }
 
-
-
     componentDidMount () {
-        // axios.get('https://my-burger-df13e.firebaseio.com/Ingredients.json')
-        // .then( resp => {
-        //     this.setState({ingredients: resp.data})
-        // })
-        // .catch(error => {
-        //     this.setState({error: true});
-        // })
+        console.log("this is questionable: ", this.props);
         this.props.initIngredients();
     }
 

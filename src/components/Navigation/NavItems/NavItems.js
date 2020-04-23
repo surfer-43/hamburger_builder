@@ -4,7 +4,8 @@ import React from 'react';
 import classes from './NavItems.css';
 import NavItem from './NavItem/NavItem';
 
-const navItems = () => {
+const navItems = (props) => {
+    const button = props.authenticated ? (<NavItem link="/logout">Sign out</NavItem>):(<NavItem link="/auth">Sign in</NavItem>);
     return (
         <ul className={classes.NavItems}>
             <NavItem 
@@ -14,9 +15,7 @@ const navItems = () => {
             <NavItem 
                 link="/orders"
             >Orders</NavItem>
-            <NavItem 
-                link="/auth"
-            >Sign in</NavItem>
+            {button}
         </ul>
     )
 }

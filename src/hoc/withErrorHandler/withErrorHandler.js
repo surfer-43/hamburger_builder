@@ -42,7 +42,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
         }
 
         componentWillUnmount() {
-            console.log("this should fire")
+            console.log("ErrorHandler - componentWillUnmount fire");
             /**
              * because the withErrorHandler component can wrap around many different 
              * components, there could be many different interceptros that linger but aren't used
@@ -50,7 +50,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
              * as much inactive code and memory leaks
              */
             axios.interceptors.request.eject(this.reqInerceptor);
-            axios.interceptors.request.eject(this.responseInterceptor);
+            axios.interceptors.response.eject(this.responseInterceptor);
         }
 
         errorConfirmedHandler = () => {
