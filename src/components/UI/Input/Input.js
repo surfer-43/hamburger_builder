@@ -36,10 +36,20 @@ const input = (props) => {
                     />
                     {/* validationError */}
                 </div>
-            )
+            );
+            break;
+        case ("textarea"):
+            inputElement = (
+                <textarea
+                    className={inputClasses.join(' ')}
+                    {...props.elementConfig}
+                    value={props.value}
+                    onChange={props.changed}
+                />
+            );
             break;
         
-        case "select":
+        case ("select"):
             inputElement = (
                 <div>
                     <label className={classes.Label}>{props.value}</label>
@@ -55,7 +65,7 @@ const input = (props) => {
                         })}
                     </select>
                 </div>
-            )
+            );
             break;
 
         default:

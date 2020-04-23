@@ -111,23 +111,33 @@ class ContactData extends Component {
             formData: formData
         }    
 
-        this.props.purchaseStartOrder(order);
-        // sending the order information to the database
+        this.props.purchaseStartOrder(order, this.props.token);
+        // sending the order information to the database only if 
         
     }
 
     checkValidity = (value, rule) => {
         let isValid = true;
-        if(rule.required && isValid ) {
-            isValid = value.trim() !== "";
+        if(rule.required) {
+            isValid = value.trim() !== ""  && isValid ;
         }
 
-        if(rule.minLength && isValid ) {
-            isValid = value.length >= rule.minLength;
+        if(rule.minLength) {
+            isValid = value.length >= rule.minLength  && isValid ;
         }
 
-        if(rule.maxLength && isValid ) {
-            isValid = value.length <= rule.maxLength;
+        if(rule.maxLength) {
+            isValid = value.length <= rule.maxLength  && isValid ;
+        }
+
+        if (rule.isEmail) {
+            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+            isValid = pattern.test(value) && isValid
+        }
+
+        if (rule.isNumeric) {
+            const pattern = /^\d+$/;
+            isValid = pattern.test(value) && isValid
         }
 
         return isValid;
@@ -203,13 +213,14 @@ const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
-        loading: state.order.loading
+        loading: state.order.loading,
+        token: state.auth.token
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        purchaseStartOrder: (orderData) => dispatch(actionTypes.purchaseOrder(orderData))
+        purchaseStartOrder: (orderData, token) => dispatch(actionTypes.purchaseOrder(orderData, token))
     }
 }
 

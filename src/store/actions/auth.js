@@ -1,5 +1,5 @@
-import * as actionTypes from "./actionTypes";
 import axios from 'axios';
+import * as actionTypes from "./actionTypes";
 
 export const authStart = () => {
     return {
@@ -35,7 +35,6 @@ export const checkAuthtimeout = (expiresTime) => {
 }
 
 export const auth = (email, password, isSignup) => {
-    console.log("auth should have fired");
     const apiKey = "AIzaSyAcl1o4ECdJPruK20ZWiVpwszOH3b6OIIc";
     return dispatch => {
         dispatch(authStart());
