@@ -7,6 +7,7 @@ export const authStart = () => {
     }
 };
 export const authSuccess = (token, userId) => {
+    console.log("authSuccess happened");
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
@@ -21,16 +22,46 @@ export const authFail = (error) => {
 }
 
 export const logout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expirationDate');
+    localStorage.removeItem('userId');
     return {
         type: actionTypes.AUTH_LOGOUT
     }
 }
 
-export const checkAuthtimeout = (expiresTime) => {
+export const checkAuthTimeout = (expiresTime) => {
     return dispatch => {
         setTimeout(()=>{
             dispatch(logout());
-        }, expiresTime * 1000);
+        }, expiresTime);
+    }
+}
+
+export const authCheckState = () => {
+    return dispatch => {
+        const token = localStorage.getItem('token');
+
+        if(!token) {
+            dispatch(logout());
+        } else {
+            const expirationDate = new Date(localStorage.getItem('expirationDate'));
+            if(expirationDate > new Date()) {
+                const userId = localStorage.getItem('userId');
+                console.log('user Id is: ', userId);
+                dispatch(authSuccess(token, userId));
+                dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()));
+            } else {
+                dispatch(logout());
+            }
+        }
+    }
+}
+
+export const setAuthRedirectPath = (path) => {
+    return {
+        type: actionTypes.SET_AUTH_REDIRECT_PATH,
+        path: path
     }
 }
 
@@ -51,20 +82,16 @@ export const auth = (email, password, isSignup) => {
 
         axios.post(url, authData)
             .then(resp => {
-                console.log("authenitcation response: ", resp);
+                const expirationData = new Date(new Date().getTime() + (resp.data.expiresIn * 1000));
+                 localStorage.setItem('token', resp.data.idToken);
+                 localStorage.setItem('expirationDate', expirationData);
+                 localStorage.setItem('userId', resp.data.localId);
                 dispatch(authSuccess(resp.data.idToken, resp.data.localId));
-                dispatch(checkAuthtimeout(resp.data.expiresIn));
+                dispatch(checkAuthTimeout(resp.data.expiresIn * 1000));
             })
             .catch(err => {
                 console.error("sign up or in falied: ", err);
                 dispatch(authFail(err.response.data.error));
             })
-    }
-}
-
-export const setAuthRedirectPath = (path) => {
-    return {
-        type: actionTypes.SET_AUTH_REDIRECT_PATH,
-        path: path
     }
 }
