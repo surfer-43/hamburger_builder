@@ -10,7 +10,7 @@ const initialState = {
 const orderReducer = (state = initialState, action) => {
 
     const purchaseInit = (state, action) => {
-        return updateObj( state, {purchased: true});
+        return updateObj( state, {purchased: false});
     }
     const purchaseStart = (state, action) => {
         return updateObj( state, {loading: true});
