@@ -6,6 +6,7 @@ import axios from '../../../axios-orders';
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import { updateObj, formValidation } from '../../../shared/index';
 
 import * as actionTypes from '../../../store/actions/index';
 
@@ -76,7 +77,8 @@ class ContactData extends Component {
                 },
                 value: "",
                 validation: {
-                    required: true
+                    required: true,
+                    isEmail: true
                 },
                 isValid: false,
                 modified: false
@@ -117,45 +119,16 @@ class ContactData extends Component {
         
     }
 
-    checkValidity = (value, rule) => {
-        let isValid = true;
-        if(rule.required) {
-            isValid = value.trim() !== ""  && isValid ;
-        }
-
-        if(rule.minLength) {
-            isValid = value.length >= rule.minLength  && isValid ;
-        }
-
-        if(rule.maxLength) {
-            isValid = value.length <= rule.maxLength  && isValid ;
-        }
-
-        if (rule.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if (rule.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        return isValid;
-    }
-
     changeHandler = (event, id) => {
-        const updatedOrderForm = {
-            ...this.state.orderForm
-        }
-        const updatedFormElm = {
-            ...updatedOrderForm[id]
-        }
 
-        updatedFormElm.value = event.target.value;
-        updatedFormElm.isValid = this.checkValidity(updatedFormElm.value, updatedFormElm.validation);
-        updatedFormElm.modified = true;
-        updatedOrderForm[id] = updatedFormElm;
+        const updatedFormElm = updateObj(this.state.orderForm[id], {
+            value: event.target.value,
+            isValid: formValidation(event.target.value, this.state.orderForm[id].validation),
+            modified: true
+        })
+        const updatedOrderForm = updateObj(this.state.orderForm, {
+            [id]: updatedFormElm
+        });
 
         let formIsValid = true;
         for( let inputIdentifier in updatedOrderForm) {
@@ -186,7 +159,7 @@ class ContactData extends Component {
                                 elementConfig={elm.config.elementConfig} 
                                 value={elm.config.value} 
                                 shouldValidate={elm.config.validation}
-                                invalid={!elm.config.isValid}
+                                invalid={elm.config.isValid}
                                 modified={elm.config.modified}
                                 changed={(event) => {this.changeHandler(event, elm.id)}} 
                             />
