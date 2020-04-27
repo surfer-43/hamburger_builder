@@ -7,6 +7,8 @@ import Input from '../../components/UI/Input/Input';
 import Button from "../../components/UI/Button/Button";
 import Spinner from '../../components/UI/Spinner/Spinner';
 
+import { updateObj, formValidation } from '../../shared/index';
+
 // import css classes for the form
 import classes from './Auth.css';
 
@@ -53,47 +55,18 @@ class Auth extends Component {
         console.log("props.buildingBurger? ", this.props.buildingBurger);
         console.log("authRedirectPath value: ", this.props.authRedirectPath);
         if(!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
-            this.props.onSetAuthRedirectPath();
+            this.props.onSetAuthRedirectPath(this.props.authRedirectPath);
         }
-    }
-
-    checkValidity = (value, rules) => {
-        let isValid = true;
-        if(!rules){
-            return isValid;
-        }
-        if(rules.required) {
-            isValid = value.trim() !== "" && isValid;
-        }
-        if(rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-        if(rules.maxLength) {
-            isValid = value.length <= rules.minLength && isValid
-        }
-        if(rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-
-        if(rules.isNumeric){
-            const pattern = /^\d+$/;
-            isValid = pattern.test( value ) && isValid;
-        }
-
-        return isValid;
     }
 
     inputChangeHandler = (event, controlName) => {
-        const updatedControls = {
-            ...this.state.controls,
-            [controlName]: {
-                ...this.state.controls[controlName],
+        const updatedControls = updateObj(this.state.controls, {
+            [controlName]: updateObj(this.state.controls[controlName], {
                 value: event.target.value,
-                isValid: this.checkValidity(event.target.value, this.state.controls[controlName].validations),
+                isValid: formValidation(event.target.value, this.state.controls[controlName].validations),
                 touched: true
-            }
-        }
+            })
+        })
         this.setState({controls: updatedControls});
     }
 
@@ -142,8 +115,12 @@ class Auth extends Component {
                 <p className={classes.error}>{this.props.error.message}</p>
             )
         }
-
-        let redirect = this.props.authenticated ? <Redirect to={this.props.authRedirectPath}/> : null;
+        let redirect = null;
+        if(this.props.authenticated) {
+            console.log("auth redirection should have happened: ", this.props.authenticated);
+            console.log("path should be: ", this.props.authRedirectPath);
+            redirect = <Redirect to={this.props.authRedirectPath}/>;
+        }
 
         return(
             <div className={classes.AuthData}>
@@ -176,7 +153,7 @@ const mapDispatchToProps = dispatch => {
         onAuth: (email, password, isSignup) => {
             return dispatch(actions.auth(email, password, isSignup));
         },
-        onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath('/'))
+        onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path))
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Auth);
