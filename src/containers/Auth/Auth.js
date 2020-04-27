@@ -144,6 +144,8 @@ class Auth extends Component {
         }
         let redirect = null;
         if(this.props.authenticated) {
+            console.log("auth redirection should have happened: ", this.props.authenticated);
+            console.log("path should be: ", this.props.authRedirectPath);
             redirect = <Redirect to={this.props.authRedirectPath}/>;
         }
 
