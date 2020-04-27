@@ -69,7 +69,11 @@ export const fetchOrders = (token, userId) => {
     console.log("trying to get orders with token: ", token);
     return dispatch => {
         dispatch(fetchOrdersStart());
-        const queryParams = "?auth="+token+"&orderBy=userId&equalTo="+userId
+        /**
+         * special not - query params must be "{variableName}" format
+         * '{variableName}' in single quotes doesn't work
+         */
+        const queryParams = '?auth='+token+'&orderBy="userId"&equalTo="'+userId+'"';
         axios.get("/orders.json"+queryParams)
         .then( res => {
             const fetchedData = [];
