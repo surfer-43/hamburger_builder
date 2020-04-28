@@ -12,7 +12,6 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 class Orders extends Component {
 
     componentDidMount() {
-        console.log("Orders.js componentDidMount is questionable: ", this.props);
         this.props.onFetchOrders(this.props.token, this.props.userId);
     }
 

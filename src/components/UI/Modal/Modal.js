@@ -13,9 +13,6 @@ class Modal extends Component {
     } 
 
     componentDidUpdate() {
-        // componentWillUpdate is being depricated in the new versions of React 
-        // componentDidUpdate seems to do similar things
-        console.log("Modal did update!");
     }
 
     render () {

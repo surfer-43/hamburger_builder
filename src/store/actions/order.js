@@ -23,13 +23,11 @@ export const purchaseOrderStart = () => {
 };
 
 export const purchaseOrder = (orderData, token) => {
-    console.log('starting the async call to do something?');
     return dispatch => {
         dispatch(purchaseOrderStart());
 
         axios.post('/orders.json?auth='+token, orderData)
         .then(response => {
-            console.log('what is the response.data: ', response.data);
             dispatch(purchaseOrderSuccess(response.data.name, orderData));
         })
         .catch( error => {
@@ -66,7 +64,6 @@ export const fetchOrdersFail = (error) => {
 }
 
 export const fetchOrders = (token, userId) => {
-    console.log("trying to get orders with token: ", token);
     return dispatch => {
         dispatch(fetchOrdersStart());
         /**
@@ -86,7 +83,6 @@ export const fetchOrders = (token, userId) => {
             dispatch(fetchOrdersSuccess(fetchedData));
         })
         .catch( err => {
-            console.log('err response message: ', err);
             dispatch(fetchOrdersFail(err));
         })
     }
