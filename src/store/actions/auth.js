@@ -1,3 +1,5 @@
+// Enzyme API: http://airbnb.io/enzyme/docs/api/
+// Jest Docs: https://facebook.github.io/jest/
 import axios from 'axios';
 import * as actionTypes from "./actionTypes";
 
@@ -7,7 +9,6 @@ export const authStart = () => {
     }
 };
 export const authSuccess = (token, userId) => {
-    console.log("authSuccess happened");
     return {
         type: actionTypes.AUTH_SUCCESS,
         idToken: token,
@@ -48,7 +49,6 @@ export const authCheckState = () => {
             const expirationDate = new Date(localStorage.getItem('expirationDate'));
             if(expirationDate > new Date()) {
                 const userId = localStorage.getItem('userId');
-                console.log('user Id is: ', userId);
                 dispatch(authSuccess(token, userId));
                 dispatch(checkAuthTimeout(expirationDate.getTime() - new Date().getTime()));
             } else {

@@ -5,7 +5,6 @@ import propTypes from 'prop-types';
 import classes from './BurgerIngredients.css';
 
 const burgerIngredients = (props) => {
-    // console.log("what are the props being passed: ", props)
     let ingredient = null;
 
     switch(props.type) {

@@ -20,10 +20,7 @@ const input = (props) => {
             inputClasses.push(classes.Invalid);
         } 
     }
-    // if(props.invalid && props.shouldValidate && props.modified) {
-    //     console.log("looking for invalid: ", props.invalid, " : shouldValidate: ", props.shouldValidate, " : modified: ", props.modified);
-    //     inputClasses.push(classes.Invalid);
-    // }
+
     switch(props.elementType) {
         case ('input'):
             inputElement = (

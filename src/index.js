@@ -16,7 +16,7 @@ import authReducer from './store/reducers/auth';
 // const baseReducer = burgerBuilderReducer;
 
 // dev tools for debugging
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
 // combine any number of reducers into a single reducer to be used in the application
 const rootReducer = combineReducers({

@@ -52,7 +52,6 @@ const setIngredients = (state, action) => {
 };
 
 const fetchIngredientFailed = (state, action) => {
-    console.log("FETCH_INGREDIENTS_FAILED: ", action);
     return updateObj(state, {error: true});
 }
 

@@ -21,7 +21,11 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 // import * as actionTypes from '../../store/actions/actionTypes';
 import * as actions from '../../store/actions/index';
 
-class BurgerBuilder extends Component {
+/**
+ * by adding the 'export' infront of class
+ * we get a named export giving us access to the class so we can test it
+ */
+export class BurgerBuilder extends Component {
     /**
      * initial state of the application
      */
@@ -30,7 +34,6 @@ class BurgerBuilder extends Component {
     }
 
     componentDidMount () {
-        console.log("this is questionable: ", this.props);
         this.props.initIngredients();
     }
 
