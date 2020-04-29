@@ -2,6 +2,7 @@
 // Jest Docs: https://facebook.github.io/jest/
 import axios from 'axios';
 import * as actionTypes from "./actionTypes";
+import { firebaseToken } from '../../tokens/firebaseToken';
 
 export const authStart = () => {
     return {
@@ -66,7 +67,7 @@ export const setAuthRedirectPath = (path) => {
 }
 
 export const auth = (email, password, isSignup) => {
-    const apiKey = "AIzaSyAcl1o4ECdJPruK20ZWiVpwszOH3b6OIIc";
+    const apiKey = firebaseToken;
     return dispatch => {
         dispatch(authStart());
         const authData = {

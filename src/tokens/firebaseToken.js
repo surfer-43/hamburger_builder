@@ -1,0 +1,1 @@
+export const firebaseToken = "AIzaSyAcl1o4ECdJPruK20ZWiVpwszOH3b6OIIc";
